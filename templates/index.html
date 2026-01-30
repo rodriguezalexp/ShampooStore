@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSólidos | Cosmética Consciente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">HERBAPURA</a>
+            <div class="d-flex">
+                <span class="text-muted small">Cuidado Natural</span>
+            </div>
+        </div>
+    </nav>
+    <section class="hero-section">
+        <div class="container d-flex justify-content-center align-items-center h-100">
+            <div class="hero-content">
+                <h2 class="fw-bold mb-3">Belleza que respeta tu naturaleza</h2>
+                <p class="lead mb-4">
+                    En EcoSólidos creamos fórmulas botánicas de shampoo y acondicionador sólido. 
+                    Sin plásticos, sin sulfatos y con ingredientes 100% orgánicos de nuestra tierra colombiana.
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <span class="badge-feature">🌿 100% Orgánico</span>
+                    <span class="badge-feature">🐰 Cruelty Free</span>
+                    <span class="badge-feature">🚫 Sin Plásticos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <header class="container py-5 text-center">
+        <h1 class="display-5 fw-bold mt-4">Shampoo & Acondicionador Sólido</h1>
+        <p class="lead text-muted">Libre de plásticos, lleno de vida.</p>
+    </header>
+
+    <main class="container mb-5">
+        <div class="row g-4">
+            {% for p in productos %}
+            <div class="col-md-4">
+                <div class="card card-product h-100">
+                    <div class="img-container">
+                        <img src="{{ url_for('static', filename='img/' + p.imagen) }}" alt="{{ p.nombre }}">
+                    </div>
+                    
+                    <div class="card-body p-4 text-center d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-light text-success border">Orgánico</span>
+                            {% if p.beneficios %}
+                                {% for beneficio in p.beneficios %}
+                                    <span class="badge rounded-pill bg-secondary-subtle text-dark fw-normal" style="font-size: 0.7rem;">
+                                        {{ beneficio }}
+                                    </span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <h5 class="card-title fw-bold">{{ p.nombre }}</h5>
+                        <p class="card-text text-muted small flex-grow-1">{{ p.descripcion }}</p>
+                        <h4 class="fw-bold my-3">${{ p.precio }}</h4>
+                        
+                        <a href="{{ url_for('detalle_producto', id_producto=p.id) }}" class="btn btn-custom w-100 mt-auto">
+                            Ver detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">ECOSÓLIDOS</h5>
+                    <p>Transformando la rutina de belleza en un acto de amor por el planeta.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link small">Sobre nosotros</a></li>
+                        <li><a href="#" class="footer-link small">Envíos y Devoluciones</a></li>
+                        <li><a href="#" class="footer-link small">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h5 class="fw-bold mb-3">Contáctanos</h5>
+                    <p>Medellín, Colombia<br>hola@ecosolidos.com</p>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center small">
+                &copy; 2026 EcoSólidos. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

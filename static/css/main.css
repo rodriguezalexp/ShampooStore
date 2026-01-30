@@ -1,0 +1,152 @@
+/* --- Paleta Premium Forest & Cream --- */
+:root {
+    --verde-premium: #2d3a2e !important; 
+    --dorado-suave: #b59d74;
+    --crema-fondo: #f2efeb; 
+    --glass-bg: rgba(255, 255, 255, 0.75);
+}
+
+/* --- Fondo del Body --- */
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    background-color: var(--crema-fondo) !important;
+    color: #4a4a4a;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Header con Efecto Cristal (Glassmorphism) --- */
+.navbar {
+    background-color: var(--verde-premium) !important; /* El verde bosque */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: #f2efeb !important; /* Texto crema para que resalte en el verde */
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.navbar .text-muted {
+    color: rgba(242, 239, 235, 0.7) !important; /* El texto pequeño "Cuidado Natural" en crema */
+}
+
+/* --- Estándar de Imágenes (Fijo) --- */
+.img-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background-color: #fff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* --- Tarjetas --- */
+.card-product {
+    border: none !important;
+    border-radius: 20px !important;
+    background: white !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+}
+
+/* --- Botón --- */
+.btn-custom {
+    background-color: var(--verde-premium) !important;
+    color: white !important;
+    border-radius: 50px !important;
+    border: none !important;
+    padding: 12px !important;
+    font-weight: 600;
+}
+/* --- Sección Hero --- */
+.hero-section {
+    position: relative;
+    height: 80vh; /* Ocupa el 80% de la pantalla */
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                      url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto Parallax (la imagen se queda quieta al bajar) */
+    margin-bottom: 50px;
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.15); /* Efecto Glassmorphism */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3rem;
+    border-radius: 30px;
+    max-width: 800px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    color: #f2efeb; /* Color crema */
+}
+
+.badge-feature {
+    background: rgba(45, 58, 46, 0.6); /* Verde oscuro translúcido */
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --- Footer Coordinado --- */
+/* --- Footer Coordinado y Legibilidad --- */
+footer {
+    background-color: var(--verde-premium) !important;
+    /* Esto asegura que el color base sea el crema */
+    color: var(--crema-fondo) !important; 
+    padding: 60px 0 30px 0 !important;
+    margin-top: auto !important;
+}
+
+/* Forzamos a que TODOS los textos internos sean claros */
+footer p, 
+footer span, 
+footer li,
+footer div {
+    color: rgba(242, 239, 235, 0.9); /* Crema elegante */
+    font-size: 0.9rem;               /* Tamaño equilibrado (reemplaza al 'small') */
+    line-height: 1.6;                /* Espaciado para mejor lectura */
+}
+
+footer h5 {
+    color: var(--dorado-suave) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.footer-link {
+    color: rgba(242, 239, 235, 0.7) !important;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-link:hover {
+    color: #fff !important;
+    text-decoration: underline;
+}
+
+/* La línea horizontal (hr) también debe ser sutil */
+footer hr {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
