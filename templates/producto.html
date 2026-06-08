@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSólidos | Cosmética Consciente</title>
+    <title>{{ producto.nombre }} | EcoSólidos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
@@ -41,7 +41,7 @@
                      class="navbar-logo">
             </a>
             <div class="nav-links">
-                <a href="#">Catálogo</a>
+                <a href="/#catalogo">Catálogo</a>
                 <a href="#">Ingredientes</a>
                 <a href="#">Nosotros</a>
                 <a href="#">Contacto</a>
@@ -49,127 +49,86 @@
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero-section">
-        <div class="hero-left">
-            <div class="hero-eyebrow">Cosmética consciente &nbsp;·&nbsp; Medellín, Colombia</div>
-            <h1>Cabello que<br>florece <em>desde<br>adentro</em></h1>
-            <p>Fórmulas botánicas de origen colombiano. Sin plásticos, sin sulfatos. Solo lo que tu cabello necesita, nada más.</p>
-            <a href="#catalogo" class="hero-cta">Descubrir la colección &nbsp;→</a>
-        </div>
-        <div class="hero-right">
-            <img src="{{ url_for('static', filename='img/Brisa_Citrica.avif') }}" alt="EcoSólidos">
-            <div class="hero-right-overlay">
-                <div class="hero-producto-nombre">Brisa Cítrica</div>
-                <div class="hero-producto-tipo">Shampoo sólido</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Valores -->
-    <div class="valores-strip">
-        <div class="valor-item">
-            <div class="valor-num">01</div>
-            <div class="valor-texto">
-                <h4>100% Orgánico</h4>
-                <p>Ingredientes de origen botánico, sin químicos sintéticos ni conservantes agresivos.</p>
-            </div>
-        </div>
-        <div class="valor-item">
-            <div class="valor-num">02</div>
-            <div class="valor-texto">
-                <h4>Cero plásticos</h4>
-                <p>Un champú sólido reemplaza tres botellas plásticas. Empaque completamente biodegradable.</p>
-            </div>
-        </div>
-        <div class="valor-item">
-            <div class="valor-num">03</div>
-            <div class="valor-texto">
-                <h4>Cruelty free</h4>
-                <p>Nunca probado en animales. Certificado por organizaciones internacionales de bienestar animal.</p>
-            </div>
-        </div>
+    <!-- Breadcrumb -->
+    <div class="container py-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item active">{{ producto.nombre }}</li>
+            </ol>
+        </nav>
     </div>
 
-    <!-- Catálogo -->
-    <main id="catalogo" class="container">
-        <div class="catalogo-header">
-            <div>
-                <div class="catalogo-eyebrow">Nuestra colección</div>
-                <div class="catalogo-titulo">Shampoo & <em>Acondicionador</em></div>
-            </div>
-        </div>
+    <!-- Contenido principal -->
+    <main class="container mb-5" style="padding-bottom: 80px;">
+        <div class="row g-5 align-items-start">
 
-        <div class="productos-grid">
-            {% for p in productos %}
-            <div class="card-product">
-                <div class="img-container">
-                    <img src="{{ url_for('static', filename='img/' + p.imagen) }}" alt="{{ p.nombre }}">
-                    {% if loop.index == 1 %}
-                    <span class="producto-tag">Nuevo</span>
-                    {% elif loop.index == 3 %}
-                    <span class="producto-tag">Popular</span>
-                    {% endif %}
-                </div>
-                <div class="card-body d-flex flex-column">
-                    <div class="card-tipo">{{ p.tipo }}</div>
-                    <h5 class="card-title">{{ p.nombre }}</h5>
-                    <p class="card-text flex-grow-1">{{ p.descripcion }}</p>
-                    <div class="d-flex align-items-center justify-content-between mt-4">
-                        <div class="card-precio">${{ "{:,.0f}".format(p.precio) }}</div>
-                        <a href="{{ url_for('detalle_producto', id_producto=p.id) }}" class="btn-custom">
-                            Ver detalles &nbsp;→
-                        </a>
-                    </div>
+            <!-- Imagen -->
+            <div class="col-lg-6">
+                <div class="detalle-img-container">
+                    <img src="{{ url_for('static', filename='img/' + producto.imagen) }}"
+                         alt="{{ producto.nombre }}"
+                         class="detalle-img">
                 </div>
             </div>
-            {% endfor %}
 
-            <!-- Celda CTA WhatsApp -->
-            <div class="card-product card-cta-dark">
-                <h3>¿No sabes<br><em>cuál elegir?</em></h3>
-                <p>Escríbenos y te ayudamos a encontrar la fórmula perfecta para tu cabello.</p>
-                <a href="https://wa.me/573001234567?text={{ '¡Hola! Quisiera asesoría para elegir el producto ideal para mi cabello.' | urlencode }}"
-                   target="_blank" rel="noopener noreferrer"
-                   class="btn-ws-editorial">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+            <!-- Info -->
+            <div class="col-lg-6" style="padding-top: 16px;">
+
+                <div class="detalle-eyebrow">{{ producto.tipo }}</div>
+
+                <h1 class="detalle-nombre">{{ producto.nombre }}</h1>
+
+                <p class="detalle-precio">${{ "{:,.0f}".format(producto.precio) }}</p>
+
+                <hr class="detalle-divider">
+
+                <p class="detalle-desc mb-4">{{ producto.descripcion }}</p>
+
+                <!-- Beneficios -->
+                {% if producto.beneficios %}
+                <div class="mb-4">
+                    <div class="beneficios-titulo">Beneficios</div>
+                    <ul class="beneficios-lista">
+                        {% for b in producto.beneficios %}
+                        <li class="beneficio-item">
+                            <span class="beneficio-icono">→</span>
+                            {{ b }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- Chips -->
+                <div class="info-chips mb-5">
+                    <span class="info-chip">Orgánico</span>
+                    <span class="info-chip">Cruelty Free</span>
+                    <span class="info-chip">Sin Plásticos</span>
+                    <span class="info-chip">Envío Colombia</span>
+                </div>
+
+                <!-- Botón WhatsApp -->
+                <a href="{{ link_ws }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn-whatsapp w-100 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                     </svg>
-                    &nbsp;Asesoría por WhatsApp
+                    Pedir por WhatsApp
                 </a>
+
+                <!-- Botón volver -->
+                <a href="/" class="btn-volver w-100 mb-4">
+                    ← Volver al catálogo
+                </a>
+
+                <p class="detalle-nota">Te responderemos en menos de 24 horas</p>
+
             </div>
         </div>
     </main>
-
-    <!-- Banner datos -->
-    <section class="banner-section">
-        <div class="container">
-            <div class="banner-grid">
-                <div class="banner-text">
-                    <h2>Formulado con<br>la <em>biodiversidad</em><br>colombiana</h2>
-                    <p>Cada barra es el resultado de años de investigación en cosmética sostenible. Ingredientes seleccionados de comunidades agrícolas de Colombia, bajo estrictos criterios de comercio justo.</p>
-                </div>
-                <div class="banner-nums">
-                    <div class="bnum-item">
-                        <div class="bnum-numero">100%</div>
-                        <div class="bnum-label">Ingredientes naturales</div>
-                    </div>
-                    <div class="bnum-item">
-                        <div class="bnum-numero">3×</div>
-                        <div class="bnum-label">Menos plástico</div>
-                    </div>
-                    <div class="bnum-item">
-                        <div class="bnum-numero">0</div>
-                        <div class="bnum-label">Sulfatos · Parabenos</div>
-                    </div>
-                    <div class="bnum-item">
-                        <div class="bnum-numero">CO₂</div>
-                        <div class="bnum-label">Huella carbono neutral</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer>
@@ -181,7 +140,7 @@
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <h5>Explorar</h5>
-                    <a href="#catalogo" class="footer-link">Catálogo completo</a>
+                    <a href="/" class="footer-link">Catálogo completo</a>
                     <a href="#" class="footer-link">Ingredientes</a>
                     <a href="#" class="footer-link">Sobre nosotros</a>
                     <a href="#" class="footer-link">Blog</a>
@@ -197,11 +156,11 @@
             <hr>
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div class="footer-copy">© 2026 EcoSólidos · Todos los derechos reservados</div>
-                <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer" class="footer-ws-link">
+                <a href="{{ link_ws }}" target="_blank" rel="noopener noreferrer" class="footer-ws-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                     </svg>
-                    Comprar por WhatsApp
+                    Pedir por WhatsApp
                 </a>
             </div>
         </div>
